@@ -1,0 +1,18 @@
+body, html {
+	margin: 0px;
+	padding: 0px;
+}
+
+.bgc {
+	background-color: grey;
+}
+
+#container {
+	position: absolute;
+	left: 50%;
+	top: 8%;
+	transform: translate(-50%, -50%);
+	background-color: white;
+	padding: 40px;
+	display: inline;
+}
