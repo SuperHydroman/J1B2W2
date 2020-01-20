@@ -1,0 +1,15 @@
+html, body {
+	margin: 0px;
+	padding: 0px;
+}
+
+#container {
+	width: 800px;
+	margin: 0 auto;
+	padding: 20px;
+	background-color: gray;
+}
+
+button {
+	cursor: pointer;
+}

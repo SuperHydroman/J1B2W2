@@ -1,0 +1,79 @@
+html, body {
+	margin: 0px;
+	padding: 0px;
+}
+
+* {
+	font-family: 'Roboto', sans-serif;
+}
+
+body {
+	background-color: gray;
+}
+
+#container {
+	width: 600px;
+	margin: 10px auto;
+	background-color: #f7e86f;
+	display: grid;
+	grid-gap: 5px;
+	grid-template-rows: auto auto;
+}
+
+#inputs {
+	display: grid;
+	grid-template-columns: 150px 150px 150px;
+	grid-template-rows: auto auto;
+	grid-row-gap: 8px;
+	padding: 50px;
+	grid-row: 1/2;
+}
+
+#yourInput {
+	grid-column: 2/4;
+	grid-row: 1/2;
+}
+
+#submit {
+	grid-column: 2/4;
+	padding: 8px 0px;
+	width: 50%;
+	margin: 0 auto;
+	transition: ease-in-out .4s;
+}
+
+#submit:hover {
+	width: 100%;
+}
+
+#word {
+	background-color: white;
+	grid-row: 2/3;
+	padding: 30px 0px;
+	width: 100%;
+	display: grid;
+	grid-template-rows: auto auto auto auto auto;
+}
+
+#word>div>div {
+	width: 30px;
+	height: 30px;
+	text-align: center;
+	display: inline-block;
+	padding: 10px;
+	border: 1px solid black;
+	margin: 3px;
+	background-color: white;
+}
+
+input {
+	padding-left: 5px;
+}
+
+#inputText1, #inputText2, #inputText3 {
+	margin: 0px;
+}
+
+#inputText1, #chosenWord {
+	display: none;
+}
