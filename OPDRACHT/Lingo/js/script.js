@@ -2,7 +2,6 @@ var container = document.getElementById("container");
 
 var ids = ["chosenWord", "yourInput", "submit"];
 var inputTexts = ["Word", "My answer", ""];
-// var words = ["Kaart", "Chest", "Ratje"];
 
 var amountOfRows = 1;
 
@@ -28,7 +27,7 @@ function generatePlayBoard() {
 	var chosenWord = document.getElementById("chosenWord");
 
 	chosenWord.setAttribute("type", "text");
-	chosenWord.setAttribute("value", words[Math.floor((Math.random() * words.length) + 0)]);
+	chosenWord.setAttribute("value", words[Math.floor(Math.random() * words.length) + 0]);
 	chosenWord.setAttribute("disabled", "true");		
 	document.getElementById("yourInput").setAttribute("type", "text");
 	document.getElementById("yourInput").setAttribute("placeholder", "Your letter has to be entered here");
@@ -45,6 +44,7 @@ function generatePlayBoard() {
 	document.getElementById("submit").onclick = checkWord;
 }
 
+/* Everytime the user tries to guess the word, a new row is created for the next guess. If they have won or lost, it won't */
 function makeNewRow() {
 	var chosenWordValue = document.getElementById("chosenWord").value.toLowerCase();
 	var chosenWordArray = Array.from(chosenWordValue);
@@ -53,13 +53,14 @@ function makeNewRow() {
 
 	if (amountOfRows <= 5) {
 		var letterDiv = document.createElement("DIV");
+		var letters = document.getElementById("letters" + amountOfRows);
 		letterDiv.id = "letters" + amountOfRows;
 		document.getElementById("word").appendChild(letterDiv);
-		document.getElementById("letters" + amountOfRows).style.width = "50%";
-		document.getElementById("letters" + amountOfRows).style.margin = "0 auto";
-		document.getElementById("letters" + amountOfRows).style.display = "grid";
-		document.getElementById("letters" + amountOfRows).style.gridTemplateRows = "auto";
-		document.getElementById("letters" + amountOfRows).style.gridTemplateColumns = "auto auto auto auto auto";
+		letters.style.width = "50%";
+		letters.style.margin = "0 auto";
+		letters.style.display = "grid";
+		letters.style.gridTemplateRows = "auto";
+		letters.style.gridTemplateColumns = "auto auto auto auto auto";
 		
 		for (var i = 1; i <= 5; i++) {
 			var letterDivs = document.createElement("DIV");
@@ -76,6 +77,7 @@ function makeNewRow() {
 	}
 }
 
+/* This function checks if the user has won or lost the game, and if the user won or lost, an alert is shown and stops the game. */
 function checkWin() {
 	var chosenWordValue = document.getElementById("chosenWord").value.toLowerCase();
 	var yourInputValue = document.getElementById("yourInput").value.toLowerCase();
@@ -97,6 +99,7 @@ function checkWin() {
 	}
 }
 
+/* This function compares the words with each other giving it their corresponding color. */
 function checkWord() {
 		var chosenWordValue = document.getElementById("chosenWord").value.toLowerCase();
 		var yourInputValue = document.getElementById("yourInput").value.toLowerCase();
@@ -109,33 +112,33 @@ function checkWord() {
 		}
 		else {
 			for (var f = 0; f < 5; f++) {
-				document.getElementById("l" + (f + 1) + "r" + (amountOfRows - 1)).innerHTML = yourInputArray[f].toUpperCase();
-			}
+				var elem = document.getElementById("l" + (f + 1) + "r" + (amountOfRows - 1));
+				elem.innerHTML = yourInputArray[f].toUpperCase();
+				elem.style.borderRadius = "0%";
 
-
-			for (var i = 0; i < 5; i++) {
-				console.log(i);
-				for (var e = 0; e < 5; e++) {
-
-					if (yourInputArray[i] === chosenWordArray[e]) {
-						document.getElementById("l" + (i + 1) + "r" + (amountOfRows - 1)).style.borderRadius = "0%";
-						document.getElementById("l" + (i + 1) + "r" + (amountOfRows - 1)).style.backgroundColor = "green";
-					}
-
-					else if (yourInputArray[i] != chosenWordArray[e]) {
-						if (document.getElementById("l" + (i + 1) + "r" + (amountOfRows - 1)).style.backgroundColor != "green") {
-							document.getElementById("l" + (i + 1) + "r" + (amountOfRows - 1)).style.borderRadius = "0%";
-							document.getElementById("l" + (i + 1) + "r" + (amountOfRows - 1)).style.backgroundColor = "red";
-						}
-						else {}
-					}
+				if (yourInputArray[f] === chosenWordArray[f]) {
+					document.getElementById("l" + (f + 1) + "r" + (amountOfRows - 1)).style.backgroundColor = "green";
+					chosenWordArray[f] = false;
+					yourInputArray[f] = false;
+				}
+				else {
+					document.getElementById("l" + (f + 1) + "r" + (amountOfRows - 1)).style.backgroundColor = "red";
 				}
 
-				if (document.getElementById("l" + (i + 1) + "r" + (amountOfRows - 1)).style.backgroundColor === "green" && yourInputArray[i] != chosenWordArray[i]) {
-					document.getElementById("l" + (i + 1) + "r" + (amountOfRows - 1)).style.borderRadius = "50%";
-					document.getElementById("l" + (i + 1) + "r" + (amountOfRows - 1)).style.backgroundColor = "yellow";
+			}
+
+			for (var i = 0; i < yourInputArray.length; i++) {
+				var elem = document.getElementById("l" + (i + 1) + "r" + (amountOfRows - 1));
+				if(yourInputArray[i] != false) {
+					var position = chosenWordArray.indexOf(yourInputArray[i]);
+					if(position > -1) {
+						chosenWordArray[position] = false;
+						elem.style.borderRadius = "50%";
+						elem.style.backgroundColor = "yellow";
+					}
 				}
 			}
+			console.log([chosenWordArray, yourInputArray]);
 			checkWin();
 			}
 		}
